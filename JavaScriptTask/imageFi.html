@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Filter</title>
+    <style>
+        canvas {
+            display: block;
+            margin: 20px auto;
+        }
+        .filter-buttons {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .filter-buttons button {
+            margin: 0 10px;
+        }
+        .input_imag{
+            height: 300px;
+            width: auto;
+            border: 5px solid rgb(119, 91, 91);
+            border-radius: 3%;
+        }
+    </style>
+</head>
+<body>
+    <h1>Image Filter Example</h1>
+    <div class="input_imag">
+        <input type="file" id="upload" accept="image/*">
+
+    </div>
+    <br><br>
+    <div class="filter-buttons">
+        <button id="grayscaleButton" disabled>Grayscale</button>
+        <button id="sepiaButton" disabled>Sepia</button>
+    </div>
+    <canvas id="canvas"></canvas>
+
+    <script>
+        const upload = document.getElementById('upload');
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        let originalImageData = null;
+
+        upload.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const img = new Image();
+            img.onload = () => {
+                canvas.width = img.width;
+                canvas.height = img.height;
+                ctx.drawImage(img, 0, 0);
+                originalImageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                document.getElementById('grayscaleButton').disabled = false;
+                document.getElementById('sepiaButton').disabled = false;
+            };
+            img.src = URL.createObjectURL(file);
+        });
+
+        document.getElementById('grayscaleButton').addEventListener('click', applyGrayscaleFilter);
+        document.getElementById('sepiaButton').addEventListener('click', applySepiaFilter);
+
+        function applyGrayscaleFilter() {
+            const imageData = ctx.createImageData(originalImageData);
+            const data = imageData.data;
+            const originalData = originalImageData.data;
+
+            for (let i = 0; i < originalData.length; i += 4) {
+                const red = originalData[i];
+                const green = originalData[i + 1];
+                const blue = originalData[i + 2];
+                const grayscale = 0.3 * red + 0.59 * green + 0.11 * blue;
+                data[i] = data[i + 1] = data[i + 2] = grayscale;
+                data[i + 3] = originalData[i + 3]; // Alpha channel
+            }
+
+            ctx.putImageData(imageData, 0, 0);
+        }
+
+        function applySepiaFilter() {
+            const imageData = ctx.createImageData(originalImageData);
+            const data = imageData.data;
+            const originalData = originalImageData.data;
+
+            for (let i = 0; i < originalData.length; i += 4) {
+                const red = originalData[i];
+                const green = originalData[i + 1];
+                const blue = originalData[i + 2];
+                
+                data[i] = red * 0.393 + green * 0.769 + blue * 0.189; // Red channel
+                data[i + 1] = red * 0.349 + green * 0.686 + blue * 0.168; // Green channel
+                data[i + 2] = red * 0.272 + green * 0.534 + blue * 0.131; // Blue channel
+                data[i + 3] = originalData[i + 3]; // Alpha channel
+            }
+
+            ctx.putImageData(imageData, 0, 0);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello</title>
+</head>
+<body>
+    <script>
+        function Hello() {
+            var x = document.getElementById("text-put");
+            var y = document.getElementById("demo");
+            y.innerHTML = x.value;
+        }
+    </script>
+    <h1>
+        This is the first heading
+    </h1>
+    <textarea name="text" id="text-put" placeholder="Enter your query" width="200px" height="300px" onkeydown="Hello()"></textarea>
+    <br>
+    <div id="demo">
+        data is coming...
+    </div>
+</body>
+</html>

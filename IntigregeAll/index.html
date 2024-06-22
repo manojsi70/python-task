@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Control Panel</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        h2 {
+            color: #444;
+        }
+
+        .section {
+            background-color: #fff;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            max-width: 500px;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .section:hover {
+            transform: scale(1.05);
+            background-color: #f9f9f9;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        input, textarea, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        input:focus, textarea:focus, button:hover {
+            background-color: #e0e0e0;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        button {
+            background-color: #5cb85c;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #4cae4c;
+        }
+
+        .control-camera {
+            border-left: 5px solid #1e90ff;
+        }
+
+        .send-sms {
+            border-left: 5px solid #ff6347;
+        }
+
+        .send-email {
+            border-left: 5px solid #20b2aa;
+        }
+
+        .text-to-speech {
+            border-left: 5px solid #9370db;
+        }
+
+        .control-volume {
+            border-left: 5px solid #ff8c00;
+        }
+
+        .click-and-crop-face {
+            border-left: 5px solid #ff4500;
+        }
+
+        .apply-filter {
+            border-left: 5px solid #4682b4;
+        }
+
+        .create-custom-image {
+            border-left: 5px solid #32cd32;
+        }
+    </style>
+</head>
+<body>
+    <h1>Control Panel</h1>
+
+    <div class="section control-camera">
+        <h2>Control Camera</h2>
+        <form action="/cgi-bin/camera_control.py">
+            <button type="submit">Open Camera</button>
+        </form>
+    </div>
+
+    <div class="section send-sms">
+        <h2>Send SMS on WhatsApp</h2>
+        <form action="/cgi-bin/send_sms.py" method="post">
+            <label for="phone_number">Phone Number:</label>
+            <input type="text" id="phone_number" name="phone_number" required><br><br>
+            <label for="message">Message:</label>
+            <textarea id="message" name="message" required></textarea><br><br>
+            <button type="submit">Send SMS</button>
+        </form>
+    </div>
+
+    <div class="section send-email">
+        <h2>Send Email</h2>
+        <form action="/cgi-bin/send_email.py" method="post">
+            <label for="sender_email">Sender Email:</label>
+            <input type="email" id="sender_email" name="sender_email" required><br><br>
+            <label for="sender_password">Sender Password:</label>
+            <input type="password" id="sender_password" name="sender_password" required><br><br>
+            <label for="receiver_email">Receiver Email:</label>
+            <input type="email" id="receiver_email" name="receiver_email" required><br><br>
+            <label for="subject">Subject:</label>
+            <input type="text" id="subject" name="subject" required><br><br>
+            <label for="message">Message:</label>
+            <textarea id="message" name="message" required></textarea><br><br>
+            <button type="submit">Send Email</button>
+        </form>
+    </div>
+
+    <div class="section text-to-speech">
+        <h2>Text to Speech</h2>
+        <form action="/cgi-bin/text_to_speech.py" method="post">
+            <label for="text">Text:</label>
+            <textarea id="text" name="text" required></textarea><br><br>
+            <button type="submit">Convert to Speech</button>
+        </form>
+    </div>
+
+    <div class="section control-volume">
+        <h2>Control Volume</h2>
+        <form action="/cgi-bin/control_volume.py" method="post">
+            <label for="level">Volume Level (0.0 to 1.0):</label>
+            <input type="number" step="0.1" id="level" name="level" required><br><br>
+            <button type="submit">Set Volume</button>
+        </form>
+    </div>
+
+    <div class="section click-and-crop-face">
+        <h2>Click and Crop Face</h2>
+        <form action="/cgi-bin/click_and_crop_face.py">
+            <button type="submit">Click Image and Crop Face</button>
+        </form>
+    </div>
+
+    <div class="section apply-filter">
+        <h2>Apply Filter Over an Image</h2>
+        <form action="/cgi-bin/apply_filter.py" method="post">
+            <label for="image_path">Image Path:</label>
+            <input type="text" id="image_path" name="image_path" required><br><br>
+            <label for="filter_type">Filter Type (BLUR, CONTOUR, DETAIL):</label>
+            <input type="text" id="filter_type" name="filter_type" required><br><br>
+            <button type="submit">Apply Filter</button>
+        </form>
+    </div>
+
+    <div class="section create-custom-image">
+        <h2>Create Custom Image</h2>
+        <form action="/cgi-bin/create_custom_image.py">
+            <button type="submit">Create Custom Image</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+</body>
+    <script>
+        function Mylocation(){
+            let xhr = new XMLHttpRequest();
+            let input = document.getElementById("Search-Box").value; // Get the value from the input
+            let url = "https://www.google.com/search?q=" + encodeURIComponent(input); // Construct the URL with the input value
+            
+            xhr.open("GET", url, true);
+            xhr.onreadystatechange = function(){
+                if (xhr.readyState == 4 && xhr.status == 200){
+                    document.getElementById("demo").innerHTML = xhr.responseText; // Display the response
+                }
+            };
+            xhr.send();
+        }
+    </script>
+    <header>
+        <h1>This is My Location</h1>
+
+    </header>
+    <main>
+        <p>Do you want to know My Location</p>
+        <input type="text" id="Search-Box" >
+        <button type="submit" onclick="Mylocation()">Click here</button>
+    </main>
+    <div id="demo">
+        Location is coming.....
+    </div>
+</body>
+</html>

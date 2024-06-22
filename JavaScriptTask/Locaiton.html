@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geolocation with Address</title>
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY"></script>
+</head>
+<body>
+    <h1>Geolocation Address</h1>
+    <button onclick="getLocation()">Get Location</button>
+    <p id="location"></p>
+    <p id="address"></p>
+
+    <script>
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition, showError);
+            } else {
+                document.getElementById("location").innerHTML = "Geolocation is not supported by this browser.";
+            }
+        }
+
+        function showPosition(position) {
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+            document.getElementById("location").innerHTML = `Latitude: ${latitude}, Longitude: ${longitude}`;
+            getAddress(latitude, longitude);
+        }
+
+        function showError(error) {
+            switch(error.code) {
+                case error.PERMISSION_DENIED:
+                    document.getElementById("location").innerHTML = "User denied the request for Geolocation.";
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    document.getElementById("location").innerHTML = "Location information is unavailable.";
+                    break;
+                case error.TIMEOUT:
+                    document.getElementById("location").innerHTML = "The request to get user location timed out.";
+                    break;
+                case error.UNKNOWN_ERROR:
+                    document.getElementById("location").innerHTML = "An unknown error occurred.";
+                    break;
+            }
+        }
+
+        function getAddress(latitude, longitude) {
+            const geocoder = new google.maps.Geocoder();
+            const latlng = {lat: parseFloat(latitude), lng: parseFloat(longitude)};
+            geocoder.geocode({'location': latlng}, function(results, status) {
+                if (status === 'OK') {
+                    if (results[0]) {
+                        document.getElementById("address").innerHTML = `Address: ${results[0].formatted_address}`;
+                    } else {
+                        document.getElementById("address").innerHTML = "No results found";
+                    }
+                } else {
+                    document.getElementById("address").innerHTML = `Geocoder failed due to: ${status}`;
+                }
+            });
+        }
+    </script>
+</body>
+</html>

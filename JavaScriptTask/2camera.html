@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dual Camera Display</title>
+    <style>
+        #container {
+            display: flex;
+        }
+        video {
+            border: 3px solid black;
+            width: 50%;
+            height: auto;
+        }
+        button{
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Dual Camera Display</h1>
+    <button id="startButton">Start Cameras</button>
+    <button id="stopButton" disabled>Stop Cameras</button>
+    <div id="container">
+        <video id="video1" autoplay></video>
+        <video id="video2" autoplay></video>
+    </div>
+    <script>
+        let stream1 = null;
+        let stream2 = null;
+
+        async function getMediaStream(deviceId) {
+            return await navigator.mediaDevices.getUserMedia({
+                video: {
+                    deviceId: deviceId ? { exact: deviceId } : undefined,
+                },
+                audio: false,
+            });
+        }
+
+        async function setupCameras() {
+            try {
+                const devices = await navigator.mediaDevices.enumerateDevices();
+                const videoDevices = devices.filter(
+                    (device) => device.kind === "videoinput"
+                );
+
+                if (videoDevices.length === 0) {
+                    alert("No cameras found.");
+                    return;
+                }
+                stream1 = await getMediaStream(videoDevices[0].deviceId);
+                document.getElementById("video1").srcObject = stream1;
+                if (videoDevices.length > 1) {
+                    stream2 = await getMediaStream(videoDevices[1].deviceId);
+                    document.getElementById("video2").srcObject = stream2;
+                } else {
+                    document.getElementById("video2").style.display = 'none';
+                }
+            } catch (error) {
+                console.error("Error accessing media devices.", error);
+            }
+        }
+
+        function stopCameras() {
+            if (stream1) {
+                stream1.getTracks().forEach(track => track.stop());
+                stream1 = null;
+                document.getElementById("video1").srcObject = null;
+            }
+
+            if (stream2) {
+                stream2.getTracks().forEach(track => track.stop());
+                stream2 = null;
+                document.getElementById("video2").srcObject = null;
+            }
+        }
+
+        document.getElementById("startButton").addEventListener("click", () => {
+            setupCameras();
+            document.getElementById("startButton").disabled = true;
+            document.getElementById("stopButton").disabled = false;
+        });
+
+        document.getElementById("stopButton").addEventListener("click", () => {
+            stopCameras();
+            document.getElementById("startButton").disabled = false;
+            document.getElementById("stopButton").disabled = true;
+        });
+    </script>
+</body>
+</html>
