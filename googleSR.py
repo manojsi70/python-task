@@ -2,17 +2,15 @@ import requests
 from bs4 import BeautifulSoup
 
 def get_google_search_results(query, num_results=5):
-    # URL encode the query string
     query = query.replace(' ', '+')
     url = f"https://www.google.com/search?q={query}&num={num_results}"
 
-    # Set up headers to make the request look like it's coming from a browser
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
     }
 
     response = requests.get(url, headers=headers)
-    response.raise_for_status()  # Ensure we notice bad responses
+    response.raise_for_status() 
     soup = BeautifulSoup(response.text, 'html.parser')
 
     results = []
@@ -23,8 +21,6 @@ def get_google_search_results(query, num_results=5):
         results.append({'title': title, 'link': link, 'snippet': snippet})
 
     return results
-
-# Example usage
 query = 'Vimal Daga'
 top_results = get_google_search_results(query)
 

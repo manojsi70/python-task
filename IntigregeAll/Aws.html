@@ -66,7 +66,7 @@
 
         body {
             font-family: Arial, sans-serif;
-            background-color: rgba(60, 160, 188, 0.447);
+            background-color: #3ca0bc6b;
             margin: 0;
             padding: 0;
         }
@@ -75,10 +75,9 @@
             font-family:Arial, Helvetica, sans-serif;
             border: 5px solid rgb(21, 17, 12);
             margin: 20px 20%;
-            border-radius: 30px 2px ;
+            border-radius: 30px;
             text-align: center;
             color: #312323f2;
-            text-shadow: 2px 0 2px  red;
         }
 
         h2 {
@@ -105,30 +104,10 @@
             width: 210px;
             height: 100px;
             align-items: center;
-            /* transform: translateX(-10%  20%); */
             justify-content: center;
             transition: transform 0.3s ease, background-color 0.3s ease;
             transform: 3s cubic-bezier(0.4) translate;
         }
-        /* .section img{
-            width: 210px;
-            height: 100px;
-            
-        } */
-
-
-        /* @keyframes section {
-            0%, 20%, 50%, 80%, 100% {
-                transform: translateX(-50%) translateY(0);
-            }
-            40% {
-                transform: translateX(-50%) translateY(-150px);
-            }
-            60% {
-                transform: translateX(-50%) translateY(-75px);
-            }
-        } */
-
 
         .section:hover {
             transform: scale(1.05);
@@ -152,31 +131,13 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             transform: scale(1.1);
         }
-        .Main{
-            display: flex;
-            flex-wrap: wrap;
-            
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 50px;
-            border: 5px solid rgb(129, 56, 56);
-            box-shadow: 0px 0px 0px 5px rgba(225, 27, 27, 0.1);
-
-        }
-        .Main button{
-            color: white;
-            margin: 5px;
-            text-shadow: 2px 2px 2px rebeccapurple;
-            font-size: 20px;
-        }
     </style>
     </head>
 
-    <body id="body">
+    <body>
         <h1>This is My Menu Project</h1>
         <div class="main-container">
             <div class="section Ai_chatbox">
-                <!-- <img src="profile-pic.png" alt="afi"> -->
                 <h2>Ai ChatBox</h2>
                 <form action="http://13.50.198.69/Ai.html">
                     <button type="submit">Open</button>
@@ -263,25 +224,6 @@
                 </form>
             </div>
         </div>
-        <div class="Main">
-            <button onclick="changeColor('red')" style="background-color:rgba(255, 0, 0, 0.564)">Red</button>
-            <button onclick="changeColor('green')" style="background-color:rgba(0, 128, 0, 0.484)">Green</button>
-            <button onclick="changeColor('blue')" style="background-color:blue">Blue</button>
-            <button onclick="changeColor('orange')" style="background-color:orange">Orange</button>
-            <button onclick="changeColor('gray')" style="background-color:gray">Gray</button>
-            <button onclick="changeColor('yellow')" style="background-color:yellow">Yellow</button>
-            <button onclick="changeColor('pink')" style="background-color:pink">Pink</button>
-            <button onclick="changeColor('peru')" style="background-color:peru">Peru</button>
-            <button onclick="changeColor('aqua')" style="background-color:aqua">Aqua</button>
-            <button onclick="changeColor('white')" style="background-color:white">White</button>
-            <button onclick="changeColor('black')" style="background-color:black; color:white">Black</button>
-        </div>
-        <script>
-            function changeColor(color){
-              document.getElementById("body").style.backgroundColor = color;
-     
-            }
-        </script>
     </body>
 
 </html>

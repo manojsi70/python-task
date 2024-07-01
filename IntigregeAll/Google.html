@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Search</title>
+    <link rel="icon" href="data:,">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+        }
+        
+        h2 {
+            color: #333;
+            margin-top: 50px;
+            margin-bottom: 20px;
+        }
+        #searchQuery {
+            width: 80%;
+            max-width: 500px;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        #suggestions {
+            position: absolute;
+            max-width: 500px;
+            width: 80%;
+            background: white;
+            border: 1px solid #ccc;
+            border-top: none;
+            border-radius: 0 0 5px 5px;
+            z-index: 1000;
+            display: none;
+        }
+        #suggestions div {
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+            cursor: pointer;
+        }
+        #suggestions div:last-child {
+            border-bottom: none;
+        }
+        #suggestions div:hover {
+            background-color: #f0f0f0;
+        }
+        #searchBtn {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #3d434d;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.5s ease;
+            box-shadow: 0px 0px 5px rgba(176, 173, 173, 0);
+        }
+        #searchBtn:hover {
+            background-color: #514a1a;
+            padding: 12px 22px;
+            font-size: 18px;
+            transition: background-color 3s ease;
+            transform: 3s cubic-bezier(0.4) translate;
+        }
+        #results {
+            width: 80%;
+            max-width: 600px;
+            margin-top: 20px;
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        #results div {
+            margin-bottom: 20px;
+        }
+        #results h3 {
+            margin: 0;
+            font-size: 18px;
+            color: #333;
+        }
+        #results p {
+            margin: 5px 0;
+            color: #666;
+        }
+        #results a {
+            color: #515254;
+            text-decoration: none;
+        }
+        #results a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h2>Google Search</h2>
+    <input type="text" id="searchQuery" placeholder="Enter your search query">
+    <div id="suggestions"></div>
+    <button id="searchBtn">Search</button>
+    <div id="results"></div>
+
+    <script>
+        document.getElementById("searchQuery").addEventListener("input", function() {
+            var query = this.value.trim();
+            if (query !== "") {
+                // Mock fetching suggestions
+                setTimeout(() => {
+                    const suggestions = ["example suggestion 1", "example suggestion 2", "example suggestion 3"];
+                    displaySuggestions(suggestions);
+                }, 500);
+            } else {
+                document.getElementById("suggestions").style.display = "none";
+            }
+        });
+
+        function displaySuggestions(suggestions) {
+            var suggestionsDiv = document.getElementById("suggestions");
+            suggestionsDiv.innerHTML = "";
+            if (suggestions.length > 0) {
+                suggestions.forEach(function(suggestion) {
+                    var suggestionDiv = document.createElement("div");
+                    suggestionDiv.textContent = suggestion;
+                    suggestionDiv.addEventListener("click", function() {
+                        document.getElementById("searchQuery").value = suggestion;
+                        suggestionsDiv.style.display = "none";
+                    });
+                    suggestionsDiv.appendChild(suggestionDiv);
+                });
+                suggestionsDiv.style.display = "block";
+            } else {
+                suggestionsDiv.style.display = "none";
+            }
+        }
+
+        document.getElementById("searchBtn").addEventListener("click", function() {
+            var query = document.getElementById("searchQuery").value.trim();
+            if (query !== "") {
+                // Mock fetching search results
+                setTimeout(() => {
+                    const results = [
+                        { title: "Example Result 1", link: "https://www.example1.com", snippet: "This is a snippet for example result 1." },
+                        { title: "Example Result 2", link: "https://www.example2.com", snippet: "This is a snippet for example result 2." },
+                        { title: "Example Result 3", link: "https://www.example3.com", snippet: "This is a snippet for example result 3." },
+                        { title: "Example Result 4", link: "https://www.example4.com", snippet: "This is a snippet for example result 4." },
+                        { title: "Example Result 5", link: "https://www.example5.com", snippet: "This is a snippet for example result 5." }
+                    ];
+                    displayResults(results);
+                }, 500);
+            }
+        });
+
+        function displayResults(results) {
+            var resultsDiv = document.getElementById("results");
+            resultsDiv.innerHTML = "";
+            if (results) {
+                results.forEach(function(result, index) {
+                    var resultDiv = document.createElement("div");
+                    resultDiv.innerHTML = `
+                        <h3>Result ${index + 1}:</h3>
+                        <p>Title: ${result.title}</p>
+                        <p>Link: <a href="${result.link}" target="_blank">${result.link}</a></p>
+                        <p>Snippet: ${result.snippet}</p>
+                    `;
+                    resultsDiv.appendChild(resultDiv);
+                });
+            } else {
+                resultsDiv.textContent = "Failed to retrieve search results.";
+            }
+        }
+    </script>
+</body>
+</html>
